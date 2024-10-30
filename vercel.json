@@ -1,22 +1,31 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "furnicure/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb" }
+  "version": 2,
+  "builds": [
+    {
+      "src": "furnicure/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb"
       }
-      
-    ],
-    "routes": [
-      {
-        "src": "/static/(.*)",
-        "dest": "/staticfiles/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "furnicure/wsgi.py"
+    },
+    {
+      "src": "build_fies.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles_build"
+               
       }
-    ]
-  }
-  
+      
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/staticfiles/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "furnicure/wsgi.py"
+    }
+  ]
+}
